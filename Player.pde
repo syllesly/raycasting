@@ -34,7 +34,7 @@ class Player {
     for(float i=0;i<w+h;i++) {
       if(xi<0 || yi<0 || xi>=w || yi>=h) {
         break;
-      }else if(bMap[(int) xi][(int) yi]==1) {
+      }else if(bMap[(int) xi][(int) yi]>0) {
         break;
       }
       float dirx=endx-x;
