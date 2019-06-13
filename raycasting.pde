@@ -20,6 +20,7 @@ float collisionLength=0.05;
 HashMap<String, Boolean> keys=new HashMap<String, Boolean>();
 float frmRt=60;
 PImage[] textures;
+Sprite[] sprites;
 void settings() {
   //size((int) (displayHeight*1.5),(int) (displayHeight*0.75));
   fullScreen();
@@ -30,6 +31,8 @@ void setup() {
     textures[i]=loadImage("textures\\texture"+(i+1)+".jpg");
     textures[i].loadPixels();
   }
+  sprites=new Sprite[1];
+  sprites[0]=new Sprite(1.5,6.5);
   loadMap();
   scl=(height/4)/h;
   player=new Player(1.5,1.5,0,0.03,0.001);
@@ -125,6 +128,15 @@ void draw() {
       }
     }
   }
+  for(int i=0;i<sprites.length;i++) {
+    float angle=atan2(sprites[i].y-player.y,sprites[i].x-player.x)-HALF_PI-player.facing;
+    float sX=-tan(angle);
+    if(abs(sX)<=lenseWidth/2) {
+      fill(0);
+      noStroke();
+      rect((sX+lenseWidth/2)/lenseWidth*width,0,rectWidth,height);
+    }
+  }
   strokeWeight(1);
   stroke(0,0,0,80);
   for(int x=0;x<w;x++) {
@@ -134,8 +146,12 @@ void draw() {
       rect(x*scl,y*scl,scl,scl);
     }
   }
-  fill(255,0,0,80);
+  fill(0,0,255,80);
   player.show();
+  fill(255,0,0,80);
+  for(int i=0;i<sprites.length;i++) {
+    ellipse(sprites[i].x*scl,sprites[i].y*scl,scl/2,scl/2);
+  }
   if(frameCount%60==0) {
     frmRt=frameRate;
   }
